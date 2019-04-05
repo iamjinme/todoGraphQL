@@ -1,6 +1,19 @@
 const Koa = require('koa');
 const { ApolloServer, gql } = require('apollo-server-koa');
 
+const todos = [
+  {
+    id: 1,
+    body: 'Harry Potter and the Chamber of Secrets',
+    date: '20190401',
+  },
+  {
+    id: 2,
+    body: 'Jurassic Park',
+    date: '20190331',
+  },
+];
+
 // Construct a schema, using GraphQL schema language
 const typeDefs = gql`
   type Query {
