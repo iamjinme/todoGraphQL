@@ -22,7 +22,7 @@ const todos = [
 ];
 
 // Construct a schema, using GraphQL schema language
-var schema = buildSchema(`
+const schema = buildSchema(`
   type Query {
     hello: String
     todo(id: Int!): Todo
@@ -35,22 +35,23 @@ var schema = buildSchema(`
   }
 `);
 
-var getTodo = function(args) { 
-  var id = args.id;
+// Function to get todo by id
+const getTodo = ({ id }) => { 
   return todos.filter(todo => {
       return todo.id == id;
   })[0];
 }
 
+// Provide functions for your schema fields
 const root = {
   hello: () => 'Hello world!',
   todo: getTodo,
   todos: () => todos,
 };
 
+// Create koa server and a GraphQL endpoint
 const app = new Koa();
 const route = '/graphql'
-
 app.use(mount(route, graphqlHTTP({
   schema,
   rootValue: root,
