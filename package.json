@@ -12,6 +12,8 @@
     "apollo-server-koa": "^2.4.8",
     "eslint": "^5.16.0",
     "graphql": "^14.2.1",
-    "koa": "^2.7.0"
+    "koa": "^2.7.0",
+    "koa-graphql": "^0.8.0",
+    "koa-mount": "^4.0.0"
   }
 }
