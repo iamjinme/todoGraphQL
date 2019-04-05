@@ -1,5 +1,7 @@
 const Koa = require('koa');
-const { ApolloServer, gql } = require('apollo-server-koa');
+const mount = require('koa-mount');
+const graphqlHTTP = require('koa-graphql');
+const { buildSchema } = require('graphql');
 
 const todos = [
   {
@@ -12,12 +14,18 @@ const todos = [
     body: 'Jurassic Park',
     date: '20190331',
   },
+  {
+    id: 3,
+    body: 'The Avengers',
+    date: '20190101',
+  },
 ];
 
 // Construct a schema, using GraphQL schema language
-const typeDefs = gql`
+var schema = buildSchema(`
   type Query {
     hello: String
+    todo(id: Int!): Todo
     todos: [Todo]
   }
   type Todo {
@@ -25,21 +33,30 @@ const typeDefs = gql`
     body: String
     date: String
   }
-`;
+`);
 
-// Provide resolver functions for your schema fields
-const resolvers = {
-  Query: {
-    hello: () => 'Hello world!',
-    todos: () => todos,
-  },
+var getTodo = function(args) { 
+  var id = args.id;
+  return todos.filter(todo => {
+      return todo.id == id;
+  })[0];
+}
+
+const root = {
+  hello: () => 'Hello world!',
+  todo: getTodo,
+  todos: () => todos,
 };
 
-const server = new ApolloServer({ typeDefs, resolvers });
-
 const app = new Koa();
-server.applyMiddleware({ app });
+const route = '/graphql'
+
+app.use(mount(route, graphqlHTTP({
+  schema,
+  rootValue: root,
+  graphiql: true
+})));
 
 app.listen({ port: 4000 }, () =>
-  console.log(`🚀 Server ready at http://localhost:4000${server.graphqlPath}`)
+  console.log(`🚀 Server ready at http://localhost:4000${route}`)
 );
