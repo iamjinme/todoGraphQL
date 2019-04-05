@@ -18,6 +18,7 @@ const todos = [
 const typeDefs = gql`
   type Query {
     hello: String
+    todos: [Todo]
   }
   type Todo {
     id: Int
@@ -30,6 +31,7 @@ const typeDefs = gql`
 const resolvers = {
   Query: {
     hello: () => 'Hello world!',
+    todos: () => todos,
   },
 };
 
