@@ -9,7 +9,6 @@
   "author": "Jinme Mirabal",
   "license": "MIT",
   "dependencies": {
-    "apollo-server-koa": "^2.4.8",
     "eslint": "^5.16.0",
     "graphql": "^14.2.1",
     "koa": "^2.7.0",
