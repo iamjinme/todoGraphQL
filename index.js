@@ -1,5 +1,7 @@
 const Koa = require('koa');
 const mount = require('koa-mount');
+const render = require('koa-ejs');
+const path = require('path');
 const graphqlHTTP = require('koa-graphql');
 const { buildSchema } = require('graphql');
 
@@ -49,8 +51,21 @@ const root = {
   todos: () => todos,
 };
 
-// Create koa server and a GraphQL endpoint
 const app = new Koa();
+// Add middleware to render ejs
+render(app, {
+  root: path.join(__dirname, 'views'),
+  layout: false,
+  viewExt: 'html',
+  cache: false,
+  debug: false
+});
+
+app.use(mount('/todo', async (ctx) => {
+  await ctx.render('index', { body: 'Hello World!'});
+}));
+
+// Create koa server and a GraphQL endpoint
 const route = '/graphql'
 app.use(mount(route, graphqlHTTP({
   schema,
