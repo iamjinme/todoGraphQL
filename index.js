@@ -24,6 +24,7 @@ const todos = [
 ];
 
 const tasks = ["buy beers", "make todo app"];
+const completed = ["finish day"];
 
 // Construct a schema, using GraphQL schema language
 const schema = buildSchema(`
@@ -68,12 +69,28 @@ render(app, {
 });
 
 app.use(mount('/todo', async (ctx) => {
-  await ctx.render('index', { tasks: tasks });
+  await ctx.render('index', { tasks, completed });
 }));
 
 app.use(mount('/addtask', async (ctx) => {
   const { newtask } = ctx.request.body;
   tasks.push(newtask);
+  ctx.redirect('/todo')
+}));
+
+app.use(mount('/removetask', async (ctx) => {
+  const { check } = ctx.request.body;
+  if (check) {
+    if (typeof check === 'string') {
+      completed.push(check);
+      tasks.splice(tasks.indexOf(check), 1);
+    } else {
+      for (const i = 0; i < check.length; i++) {
+        completed.push(check[i]);
+        tasks.splice(tasks.indexOf(check[i]), 1);
+      }
+    }
+  }
   ctx.redirect('/todo')
 }));
 
