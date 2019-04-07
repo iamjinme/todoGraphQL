@@ -9,7 +9,6 @@
   "author": "Jinme Mirabal",
   "license": "MIT",
   "dependencies": {
-    "eslint": "^5.16.0",
     "graphql": "^14.2.1",
     "koa": "^2.7.0",
     "koa-bodyparser": "^4.2.1",
@@ -17,5 +16,8 @@
     "koa-graphql": "^0.8.0",
     "koa-mount": "^4.0.0",
     "path": "^0.12.7"
+  },
+  "devDependencies": {
+    "eslint": "^5.16.0"
   }
 }
