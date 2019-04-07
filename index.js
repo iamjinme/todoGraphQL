@@ -23,6 +23,8 @@ const todos = [
   },
 ];
 
+const tasks = ["buy beers", "make todo app"];
+
 // Construct a schema, using GraphQL schema language
 const schema = buildSchema(`
   type Query {
@@ -52,6 +54,10 @@ const root = {
 };
 
 const app = new Koa();
+// body parser
+const bodyParser = require('koa-bodyparser');
+// load middleware to parser body
+app.use(bodyParser());
 // Add middleware to render ejs
 render(app, {
   root: path.join(__dirname, 'views'),
@@ -62,7 +68,13 @@ render(app, {
 });
 
 app.use(mount('/todo', async (ctx) => {
-  await ctx.render('index', { body: 'Hello World!'});
+  await ctx.render('index', { tasks: tasks });
+}));
+
+app.use(mount('/addtask', async (ctx) => {
+  const { newtask } = ctx.request.body;
+  tasks.push(newtask);
+  ctx.redirect('/todo')
 }));
 
 // Create koa server and a GraphQL endpoint
