@@ -75,10 +75,10 @@ app.use(mount('/addtask', async (ctx) => {
 app.use(mount('/removetask', async (ctx) => {
   const { check } = ctx.request.body;
   if (check) {
-    for (let value of check) {
-      value = parseInt(value);
-      completed.push(todos[value]);
-      delete todos[value];
+    for (let key of check) {
+      key = parseInt(key);
+      completed.push(todos[key]);
+      delete todos[key];
     }
   }
   ctx.redirect('/todo')
