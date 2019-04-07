@@ -54,12 +54,13 @@ const root = {
   todos: () => todos,
 };
 
+// Create koa server
 const app = new Koa();
-// body parser
+// Body parser
 const bodyParser = require('koa-bodyparser');
-// load middleware to parser body
+// Load middleware to parser body
 app.use(bodyParser());
-// Add middleware to render ejs
+// Add render ejs middleware
 render(app, {
   root: path.join(__dirname, 'views'),
   layout: false,
@@ -82,7 +83,6 @@ app.use(mount('/addtask', async (ctx) => {
 
 // POST removetask
 app.use(mount('/removetask', async (ctx) => {
-  console.log(ctx.request.body);
   const { check } = ctx.request.body;
   if (check) {
     for (let value of check) {
@@ -93,7 +93,7 @@ app.use(mount('/removetask', async (ctx) => {
   ctx.redirect('/todo')
 }));
 
-// Create koa server and a GraphQL endpoint
+// Mount GraphQL endpoint
 const route = '/graphql'
 app.use(mount(route, graphqlHTTP({
   schema,
