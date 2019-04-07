@@ -12,6 +12,7 @@
     "eslint": "^5.16.0",
     "graphql": "^14.2.1",
     "koa": "^2.7.0",
+    "koa-bodyparser": "^4.2.1",
     "koa-ejs": "^4.2.0",
     "koa-graphql": "^0.8.0",
     "koa-mount": "^4.0.0",
