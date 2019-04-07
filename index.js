@@ -68,27 +68,26 @@ render(app, {
   debug: false
 });
 
+// GET index
 app.use(mount('/todo', async (ctx) => {
   await ctx.render('index', { tasks, completed });
 }));
 
+// POST addtask
 app.use(mount('/addtask', async (ctx) => {
   const { newtask } = ctx.request.body;
   tasks.push(newtask);
   ctx.redirect('/todo')
 }));
 
+// POST removetask
 app.use(mount('/removetask', async (ctx) => {
+  console.log(ctx.request.body);
   const { check } = ctx.request.body;
   if (check) {
-    if (typeof check === 'string') {
-      completed.push(check);
-      tasks.splice(tasks.indexOf(check), 1);
-    } else {
-      for (const i = 0; i < check.length; i++) {
-        completed.push(check[i]);
-        tasks.splice(tasks.indexOf(check[i]), 1);
-      }
+    for (let value of check) {
+      completed.push(value);
+      tasks.splice(tasks.indexOf(value), 1);
     }
   }
   ctx.redirect('/todo')
