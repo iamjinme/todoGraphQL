@@ -11,7 +11,7 @@
         <button> Add Task </button>
         <h2> Added Task </h2>
         <% for( var i = 0; i < tasks.length; i++){ %>
-          <li><input type="checkbox" name="check" value="<%= tasks[i] %>" /> <%= tasks[i] %> </li>
+          <li><input type="checkbox" name="check[]" value="<%= tasks[i] %>" /> <%= tasks[i] %> </li>
         <% } %>
         <button formaction="/removetask" type="submit"> Remove </button>
       </form>
