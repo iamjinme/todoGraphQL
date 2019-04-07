@@ -16,6 +16,9 @@
         <button formaction="/removetask" type="submit"> Remove </button>
       </form>
       <h2> Completed task </h2>
+      <% for(var i = 0; i < completed.length; i++){ %>
+        <li><input type="checkbox" checked><%= completed[i] %> </li>
+      <% } %>
     </div>
   </body>
 </html>
