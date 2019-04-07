@@ -5,25 +5,12 @@ const path = require('path');
 const graphqlHTTP = require('koa-graphql');
 const { buildSchema } = require('graphql');
 
-const todos = [
-  {
-    id: 1,
-    body: 'Harry Potter and the Chamber of Secrets',
-    date: '20190401',
-  },
-  {
-    id: 2,
-    body: 'Jurassic Park',
-    date: '20190331',
-  },
-  {
-    id: 3,
-    body: 'The Avengers',
-    date: '20190101',
-  },
-];
-
-const tasks = ["buy beers", "make todo app"];
+// Creating todos examples
+const todos = [];
+todos[1] = 'buy beers';
+todos[2] = 'make todo app';
+let counter = todos.length;
+// Creating completed todos example
 const completed = ["finish day"];
 
 // Construct a schema, using GraphQL schema language
@@ -71,13 +58,16 @@ render(app, {
 
 // GET index
 app.use(mount('/todo', async (ctx) => {
-  await ctx.render('index', { tasks, completed });
+  await ctx.render('index', { todos, completed });
 }));
 
 // POST addtask
 app.use(mount('/addtask', async (ctx) => {
-  const { newtask } = ctx.request.body;
-  tasks.push(newtask);
+  const { todo } = ctx.request.body;
+  if (todo !== '') {
+    todos[counter] = todo;
+    counter++;
+  }
   ctx.redirect('/todo')
 }));
 
@@ -86,8 +76,9 @@ app.use(mount('/removetask', async (ctx) => {
   const { check } = ctx.request.body;
   if (check) {
     for (let value of check) {
-      completed.push(value);
-      tasks.splice(tasks.indexOf(value), 1);
+      value = parseInt(value);
+      completed.push(todos[value]);
+      delete todos[value];
     }
   }
   ctx.redirect('/todo')
