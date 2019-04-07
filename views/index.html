@@ -1,6 +1,9 @@
 <html>
   <head>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/skeleton/2.0.4/skeleton.min.css">
+    <style type="text/css">
+      .completed { text-decoration:line-through; }
+    </style>
     <title>ToDo App</title>
   </head>
   <body>
@@ -16,8 +19,8 @@
         <button formaction="/removetask" type="submit"> Remove </button>
       </form>
       <h2> Completed task </h2>
-      <% for(var i = 0; i < completed.length; i++){ %>
-        <li><input type="checkbox" checked><%= completed[i] %> </li>
+      <% for(let item of completed){ %>
+        <li class="completed"><%= item %></li>
       <% } %>
     </div>
   </body>
