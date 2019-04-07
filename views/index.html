@@ -9,14 +9,14 @@
   <body>
     <div class="container">
       <h2> A Simple ToDo List App </h2>
-      <form action ="/addtask" method="POST">
+      <form action ="/addtodo" method="POST">
         <input type="text" name="todo" placeholder="add new task">
         <button> Add Task </button>
         <h2> Added Task </h2>
         <% for(let item in todos){ %>
           <li><input type="checkbox" name="check[]" value="<%= item %>" /><%= todos[item] %></li>
         <% } %>
-        <button formaction="/removetask" type="submit"> Remove </button>
+        <button formaction="/removetodo" type="submit"> Remove </button>
       </form>
       <h2> Completed task </h2>
       <% for(let item of completed){ %>

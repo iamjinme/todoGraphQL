@@ -61,8 +61,8 @@ app.use(mount('/todo', async (ctx) => {
   await ctx.render('index', { todos, completed });
 }));
 
-// POST addtask
-app.use(mount('/addtask', async (ctx) => {
+// POST addtodo
+app.use(mount('/addtodo', async (ctx) => {
   const { todo } = ctx.request.body;
   if (todo !== '') {
     todos[counter] = todo;
@@ -71,8 +71,8 @@ app.use(mount('/addtask', async (ctx) => {
   ctx.redirect('/todo')
 }));
 
-// POST removetask
-app.use(mount('/removetask', async (ctx) => {
+// POST removetodo
+app.use(mount('/removetodo', async (ctx) => {
   const { check } = ctx.request.body;
   if (check) {
     for (let key of check) {
